@@ -37,7 +37,41 @@ const app = {
         setTagsList (state, list) {
             state.tagsList.push(...list);
         },
-        updateMenulist (state) {
+        updateMenulist (state, userMenus) {
+            // console.log("userMenus")
+            // hemincan
+            if(userMenus!=null){
+                var keyUserMenus = {};
+                for (var i = 0; i < userMenus.length; i++) {
+                    var url =userMenus[i].url;
+                    if(url!=null){
+                        url = url.replace(/\//g,"")
+                        keyUserMenus[url]=userMenus[i];
+                    }
+                    
+                }
+                for (var i = 0; i < appRouter.length; i++) {
+                    var c = appRouter[i].children;
+                    var havenoaccessCount=0;
+                    if(c!=null){
+                        for (var a = 0; a < c.length; a++) {
+                            var path =c[a].path;
+                            path = path.replace(/\//g,"");
+                            if(keyUserMenus[path]==null){
+                                // console.log(path)
+                                // 没有这个权限,把access设置成1
+                                havenoaccessCount++;
+                                c[a].access=1;
+                            }
+                        }
+                        if(havenoaccessCount==c.length){
+                            //所有孩子都没权限 ,父亲也不显示了
+                            appRouter[i].access=1;
+                        }
+                    }
+                }
+            }
+            /// hemincan加，为了不显示 那些没有权限的菜单
             let accessCode = parseInt(Cookies.get('access'));
             let menuList = [];
             appRouter.forEach((item, index) => {

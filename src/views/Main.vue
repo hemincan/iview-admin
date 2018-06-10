@@ -95,7 +95,8 @@
                 shrink: false,
                 userName: '',
                 isFullScreen: false,
-                openedSubmenuArr: this.$store.state.app.openedSubmenuArr
+                openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
+                userMenus:null,
             };
         },
         computed: {
@@ -127,7 +128,7 @@
         methods: {
             init () {
                 let pathArr = util.setCurrentPath(this, this.$route.name);
-                this.$store.commit('updateMenulist');
+                this.$store.commit('updateMenulist', this.userMenus);
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
@@ -203,7 +204,14 @@
             }
         },
         mounted () {
-            this.init();
+            this.$http.post('/menu/findUserMenus').then(response=> {
+                 var data = response.data;
+                  if(data.code == 0) {
+                    this.userMenus=data.result;
+                    this.init();
+                }
+            })
+            
             window.addEventListener('resize', this.scrollBarResize);
         },
         created () {
