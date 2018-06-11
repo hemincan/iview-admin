@@ -58,6 +58,7 @@ mounted() {
 },
  methods: {
         findAll() {
+            console.log("ssssss")
             this.$http.get('/menu/findUserMenus').then(res => {
                 this.data1 = res.data.result;
                 this.data1 = treeUtils(this.data1, 'parentId', 'id');

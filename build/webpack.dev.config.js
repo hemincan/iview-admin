@@ -48,7 +48,7 @@ module.exports = merge(webpackBaseConfig, {
     ],
     // hemmincan 跨越请求
     devServer: {
-        port: 8089,
+        port: 10080,
         proxy: {
           '/api': {
             target: 'http://localhost:8050/',

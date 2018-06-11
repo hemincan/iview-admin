@@ -10,6 +10,8 @@ import VueI18n from 'vue-i18n';
 import util from './libs/util';
 
 import axios from '@/libs/fetch';
+axios.defaults.withCredentials = true;
+
 Vue.prototype.$http = axios
 
 Vue.use(VueI18n);

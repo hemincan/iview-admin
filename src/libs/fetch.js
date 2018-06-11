@@ -1,11 +1,12 @@
 import axios from 'axios';
 // import store from '@/store';
 // import Cookies from 'js-cookie';
+axios.defaults.withCredentials=true
 
 const service = axios.create({
     baseURL: "/api/sshblog",
     timeout: 50000,
-    withCredentials: true,
+    withCredentials: false,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
      transformRequest: [function (data) {
           if(data == null){
@@ -50,4 +51,5 @@ service.interceptors.response.use(
         // }
     }
 );
+
 export default service;
