@@ -1,5 +1,10 @@
 <template>
-    <Table border :columns="columns7" :data="data6"></Table>
+    <div>
+        <div style="margin:8px;text-align:left">
+         <Button type="primary" @click="addSkip">添加</Button>
+        </div>
+        <Table border :columns="columns7" :data="data6"></Table>
+    </div>
 </template>
 <script>
     export default {
@@ -7,29 +12,15 @@
             return {
                 columns7: [
                     {
-                        title: 'Name',
-                        key: 'name',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Icon', {
-                                    props: {
-                                        type: 'person'
-                                    }
-                                }),
-                                h('strong', params.row.name)
-                            ]);
-                        }
+                        title: '角色名',
+                        key: 'roleName'
                     },
                     {
-                        title: 'Age',
-                        key: 'age'
+                        title: '备注',
+                        key: 'remark'
                     },
                     {
-                        title: 'Address',
-                        key: 'address'
-                    },
-                    {
-                        title: 'Action',
+                        title: '操作',
                         key: 'action',
                         width: 150,
                         align: 'center',
@@ -45,10 +36,13 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.show(params.index)
-                                        }
+                                              this.$router.push({
+                                                    path: "/system/role/add",
+                                                    query: {id: params.row.id,type:"edit"}
+                                                });
+                                          }
                                     }
-                                }, 'View'),
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
@@ -59,36 +53,28 @@
                                             this.remove(params.index)
                                         }
                                     }
-                                }, 'Delete')
+                                }, '删除')
                             ]);
                         }
                     }
                 ],
                 data6: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park'
-                    }
                 ]
             }
         },
+        mounted(){
+            this.findPage();
+        },
         methods: {
+            findPage(){
+                this.$http.get("/role/findPage?pageIndex=0&pageSize=100000").then(response=> {
+                      var data = response.data;
+                      this.data6=data.result.result;
+                })
+            },
+            addSkip(){
+                this.$router.push({path: '/system/role/add'});
+            },
             show (index) {
                 this.$Modal.info({
                     title: 'User Info',

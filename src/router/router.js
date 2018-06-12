@@ -232,16 +232,30 @@ var iviewAdminRouter = [
 ];
 var userRouter = [
      {
-        path: '/',
+        path: '/system/',
         icon: 'android-sad',
         title: '系统设置',
         name: 'menupage',
         component: Main,
         children: [
-            { path: 'menu/index', title: '菜单管理', name: 'menu_index',component: () => import('@/views/menu/index.vue') },
-            { path: 'menu/add', title: '菜单添加',show:false, name: 'menu_add',component: () => import('@/views/menu/add.vue') },
-            { path: 'role/index', title: '角色管理', name: 'role_index',component: () => import('@/views/role/index.vue') },
-            { path: 'role/add', title: '角色添加',show:false, name: 'role_add',component: () => import('@/views/role/add.vue') }
+            { path: 'menu/index', title: '菜单管理', name: 'menu_index',component: () => import('@/views/system/menu/index.vue') },
+            { path: 'menu/add', title: '菜单添加',show:false, name: 'menu_add',component: () => import('@/views/system/menu/add.vue') },
+            { path: 'role/index', title: '角色管理', name: 'role_index',component: () => import('@/views/system/role/index.vue') },
+            { path: 'role/add', title: '角色添加',show:false, name: 'role_add',component: () => import('@/views/system/role/add.vue') },
+            { path: 'user/index', title: '用户管理', name: 'user_index',component: () => import('@/views/system/user/index.vue') },
+            { path: 'user/add', title: '用户添加',show:false, name: 'user_add',component: () => import('@/views/system/user/add.vue') }
+           
+        ]
+    },
+     {
+        path: '/memberCenter/',
+        icon: 'android-sad',
+        title: '会员中心',
+        name: 'memberCenter',
+        component: Main,
+        children: [
+            { path: 'addAgent', title: '注册代理', name: 'addAgent',component: () => import('@/views/memberCenter/addAgent.vue') }
+           
            
         ]
     }

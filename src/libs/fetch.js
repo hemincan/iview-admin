@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.withCredentials=true
 
 const service = axios.create({
-    baseURL: "/api/sshblog",
+    baseURL: "/sshblog",
     timeout: 50000,
     withCredentials: false,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},

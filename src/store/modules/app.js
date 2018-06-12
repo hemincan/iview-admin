@@ -39,7 +39,8 @@ const app = {
         },
         updateMenulist (state, userMenus) {
             // console.log("userMenus")
-            // hemincan
+            // hemincan,从网上获取的userMenus,与本地路由进行对比
+            // 在Main.vue里进行调用和获取菜单
             if(userMenus!=null){
                 var keyUserMenus = {};
                 for (var i = 0; i < userMenus.length; i++) {
@@ -52,10 +53,15 @@ const app = {
                 }
                 for (var i = 0; i < appRouter.length; i++) {
                     var c = appRouter[i].children;
+                    var parentPath = appRouter[i].path;
+                    if(parentPath==null){
+                        parentPath='';
+                    }
                     var havenoaccessCount=0;
                     if(c!=null){
                         for (var a = 0; a < c.length; a++) {
                             var path =c[a].path;
+                            path = parentPath+path;
                             path = path.replace(/\//g,"");
                             if(keyUserMenus[path]==null){
                                 // console.log(path)
@@ -70,6 +76,8 @@ const app = {
                         }
                     }
                 }
+            }else {
+                return; //没有获取到用户可以访问的菜单,直接返回,就不会闪一下了
             }
             /// hemincan加，为了不显示 那些没有权限的菜单
             let accessCode = parseInt(Cookies.get('access'));

@@ -208,7 +208,7 @@
                  var data = response.data;
                   if(data.code == 0) {
                     this.userMenus=data.result;
-                    this.init();
+                    this.init(); // 调用store app.js里面的方法与本地的路由过滤
                 }
             })
             

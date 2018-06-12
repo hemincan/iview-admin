@@ -58,7 +58,6 @@ mounted() {
 },
  methods: {
         findAll() {
-            console.log("ssssss")
             this.$http.get('/menu/findUserMenus').then(res => {
                 this.data1 = res.data.result;
                 this.data1 = treeUtils(this.data1, 'parentId', 'id');
@@ -67,7 +66,7 @@ mounted() {
         },
         addChild(item) {
             this.$router.push({
-                path: "/menu/add",
+                path: "/system/menu/add",
                 query: {
                     parentId: item.id,
                     name: item.menuName
@@ -85,12 +84,12 @@ mounted() {
         onRowEdit(item) { // 编辑
             // console.log(item);
             this.$router.push({
-                path: "/menu/add",
+                path: "/system/menu/add",
                 query: {id: item.id,type:"edit"}
             });
         },
         onToolbarAdd() { // 添加菜单
-            this.$router.push({path: "/menu/add"});
+            this.$router.push({path: "/system/menu/add"});
         },
 }
 

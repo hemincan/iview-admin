@@ -46,13 +46,14 @@ module.exports = merge(webpackBaseConfig, {
             ]
         })
     ],
-    // hemmincan 跨越请求
+    // hemmincan 跨越请求,改这里的配置文件是要重新启动的
+    // 如果不配置和项目的上下文一致的话,那请求的时候是不会带上cookie的,自然服务器就不会认得你的请求
     devServer: {
         port: 10080,
         proxy: {
-          '/api': {
-            target: 'http://localhost:8050/',
-            pathRewrite: {'^/api' : ''},
+          '/sshblog': {
+            target: 'http://localhost:8080/',
+            pathRewrite: {'^/sshblog' : '/sshblog'},
             changeOrigin: true
           }
         }
