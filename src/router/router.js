@@ -254,7 +254,9 @@ var userRouter = [
         name: 'memberCenter',
         component: Main,
         children: [
-            { path: 'addAgent', title: '注册代理', name: 'addAgent',component: () => import('@/views/memberCenter/addAgent.vue') }
+            { path: 'addAgent', title: '注册代理', name: 'addAgent',component: () => import('@/views/memberCenter/addAgent.vue') },
+             { path: 'treeStructure', title: '安置结构', name: 'treeStructure',component: () => import('@/views/memberCenter/treeStructure.vue') },
+              { path: 'recommendedStructure', title: '推荐结构', name: 'recommendedStructure',component: () => import('@/views/memberCenter/recommendedStructure.vue') }
            
            
         ]

@@ -52,7 +52,7 @@ module.exports = merge(webpackBaseConfig, {
         port: 10080,
         proxy: {
           '/sshblog': {
-            target: 'http://localhost:8080/',
+            target: 'http://localhost:8050/',
             pathRewrite: {'^/sshblog' : '/sshblog'},
             changeOrigin: true
           }
