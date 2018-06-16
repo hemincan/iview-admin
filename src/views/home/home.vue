@@ -18,8 +18,8 @@
                                 <Col span="16" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div>
-                                            <b class="card-user-infor-name">Admin</b>
-                                            <p>super admin</p>
+                                            <b class="card-user-infor-name">{{userForm.userName}}</b>
+                                            <p>会员欢迎使用系统</p>
                                         </div>
                                     </Row>
                                 </Col>
@@ -27,12 +27,12 @@
                             <div class="line-gray"></div>
                             <Row class="margin-top-8">
                                 <Col span="8"><p class="notwrap">上次登录时间:</p></Col>
-                                <Col span="16" class="padding-left-8">2017.09.12-13:32:20</Col>
+                                <Col span="16" class="padding-left-8">{{userForm.lastLoginTime}}</Col>
                             </Row>
-                            <Row class="margin-top-8">
+                            <!-- <Row class="margin-top-8">
                                 <Col span="8"><p class="notwrap">上次登录地点:</p></Col>
                                 <Col span="16" class="padding-left-8">北京</Col>
-                            </Row>
+                            </Row> -->
                         </Card>
                     </Col>
                     <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
@@ -68,26 +68,47 @@
             </Col>
             <Col :md="24" :lg="16">
                 <Row :gutter="5">
-                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                    <Col :xs="24" :sm="12" :md="8" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="user_created_count"
                             :end-val="count.createUser"
                             iconType="android-person-add"
                             color="#2d8cf0"
-                            intro-text="今日新增用户"
+                            intro-text="推荐代理人数"
                         ></infor-card>
                     </Col>
-                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                     <Col :xs="24" :sm="12" :md="8" :style="{marginBottom: '10px'}">
+                         <Card :padding="0">
+                            
+                                <div style="height:100px;font-size:25px;padding:10px;">
+                                     右绩效：{{userForm.rightPerformance}}<br>
+                               
+                                     左绩效：{{userForm.leftPerformance}}
+                                </div>
+                            </Card>
+                    </Col>
+                  
+                    <!-- <Col :xs="24" :sm="12" :md="8" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="visit_count"
                             :end-val="count.visit"
-                            iconType="ios-eye"
+                            iconType="arrow-left-a"
                             color="#64d572"
                             :iconSize="50"
-                            intro-text="今日浏览量"
+                            intro-text="左区绩效"
                         ></infor-card>
                     </Col>
-                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                     <Col :xs="24" :sm="12" :md="8" :style="{marginBottom: '10px'}">
+                        <infor-card
+                            id-name="visit_count"
+                            :end-val="count.visit"
+                            iconType="arrow-right-a"
+                            color="#64d572"
+                            :iconSize="50"
+                            intro-text="右区绩效"
+                        ></infor-card>
+                    </Col> -->
+                   <!--  <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="collection_count"
                             :end-val="count.collection"
@@ -95,16 +116,16 @@
                             color="#ffd572"
                             intro-text="今日数据采集量"
                         ></infor-card>
-                    </Col>
-                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                    </Col> -->
+                   <!--  <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="transfer_count"
-                            :end-val="count.transfer"
-                            iconType="shuffle"
+                            :end-val="userForm.balance"
+                            iconType="cash"
                             color="#f25e43"
-                            intro-text="今日服务调用量"
+                            intro-text="余额"
                         ></infor-card>
-                    </Col>
+                    </Col> -->
                 </Row>
                 <Row>
                     <Card :padding="0">
@@ -202,6 +223,9 @@ export default {
     },
     data () {
         return {
+            userForm:{
+                lastLoginTime:''
+            },
             toDoList: [
                 {
                     title: '去iView官网学习完整的iView组件'
@@ -220,7 +244,7 @@ export default {
                 }
             ],
             count: {
-                createUser: 496,
+                createUser: 4936,
                 visit: 3264,
                 collection: 24389305,
                 transfer: 39503498
@@ -234,6 +258,9 @@ export default {
         avatorPath () {
             return localStorage.avatorImgPath;
         }
+    },
+    mounted(){
+        this.getUserInfo();
     },
     methods: {
         addNewToDoItem () {
@@ -255,6 +282,20 @@ export default {
         cancelAdd () {
             this.showAddNewTodo = false;
             this.newToDoItemValue = '';
+        },
+        getUserInfo(){
+             this.$http.post("/user/getUserInfo").then(response=> {
+                  var data = response.data;
+                  if(data.code == 0) {
+                        this.userForm = data.result;
+
+                  }else{
+                      
+                  }
+
+            }).catch(function (error) {
+              //接口失败，也就是state不是200的时候，走这里
+            });
         }
     }
 };

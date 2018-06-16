@@ -13,17 +13,61 @@
         data () {
             return {
                 columns7: [
-                    {
-                        title: '帐号',
-                        key: 'accountNumber'
+                 {
+                        title: '时间',
+                         key: 'user',
+                        render: (h, params) => {
+
+                            return h('div', {
+                                }, params.row.userName+"("+params.row.userAccount+")");
+                        }
+                    },
+                      {
+                        title: '申请时间',
+                        key: 'applyDate'
+                    },
+                 {
+                        title: '代理类型',
+                        key: 'goodsType'
                     },
                     {
-                        title: '用户姓名',
-                        key: 'userName'
+                        title: '地址',
+                        key: 'receiverAddress'
+                    },
+                    {
+                        title: '收货人',
+                        key: 'receiverName'
                     },
                     {
                         title: '手机',
-                        key: 'phone'
+                        key: 'receiverPhone'
+                    },
+                        {
+                        title: '数量',
+                        key: 'goodsCount'
+                    },
+                     {
+                        title: '总价',
+                        key: 'totalMoney'
+                    },
+                  
+                    {
+                        title: '备注',
+                        key: "remark"
+                    },
+                     {
+                        title: '状态',
+                        key: "state",
+                         render: (h, params) => {
+                            var state = "";
+                            if(params.row.state==0){
+                                state = "未处理";
+                            }else{
+                                state = "已完成";
+                            }
+                            return h('div', {
+                                }, state);
+                        }
                     },
                     {
                         title: '操作',
@@ -79,7 +123,7 @@
         },
         methods: {
             findPage(){
-                this.$http.get("/user/findAdminUserPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize).then(response=> {
+                this.$http.get("/applyGoods/findPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize+"&orderBy=id desc").then(response=> {
                       var data = response.data;
                       this.data6=data.result.result;
                       this.pageData.totalCount=data.result.totalCount;

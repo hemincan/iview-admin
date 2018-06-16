@@ -58,8 +58,8 @@ export const otherRouter = {
         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
         { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/views/advanced-router/component/order-info.vue') }, // 用于展示动态路由
-        { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/views/advanced-router/component/shopping-info.vue') }, // 用于展示带参路由
-        { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') }
+        { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/views/advanced-router/component/shopping-info.vue') } // 用于展示带参路由
+        // { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') }
     ]
 };
 
@@ -255,9 +255,36 @@ var userRouter = [
         component: Main,
         children: [
             { path: 'addAgent', title: '注册代理', name: 'addAgent',component: () => import('@/views/memberCenter/addAgent.vue') },
-             { path: 'treeStructure', title: '安置结构', name: 'treeStructure',component: () => import('@/views/memberCenter/treeStructure.vue') },
-              { path: 'recommendedStructure', title: '推荐结构', name: 'recommendedStructure',component: () => import('@/views/memberCenter/recommendedStructure.vue') }
+            { path: 'treeStructure', title: '安置结构', name: 'treeStructure',component: () => import('@/views/memberCenter/treeStructure.vue') },
+            { path: 'recommendedStructure', title: '推荐结构', name: 'recommendedStructure',component: () => import('@/views/memberCenter/recommendedStructure.vue') },
+            { path: 'agentType', title: '代理类型', name: 'agentType',component: () => import('@/views/memberCenter/agentType.vue') }
            
+           
+        ]
+    },
+    {
+        path: '/applyGoods/',
+        icon: 'android-sad',
+        title: '报单中心',
+        name: 'applyGoods',
+        component: Main,
+        children: [
+            { path: 'apply', title: '申请报单', name: 'apply',component: () => import('@/views/applyGoods/apply.vue') },
+             { path: 'userApplyList', title: '用户报单', name: 'userApplyList',component: () => import('@/views/applyGoods/userApplyList.vue') }
+           
+        ]
+    },
+    {
+        path: '/moneyCenter/',
+        icon: 'android-sad',
+        title: '金钱中心',
+        name: 'moneyCenter',
+        component: Main,
+        children: [
+            { path: 'bonus', title: '奖金记录', name: 'bonus',component: () => import('@/views/moneyCenter/bonus.vue') },
+             { path: 'withdraw', title: '提现记录', name: 'withdraw',component: () => import('@/views/moneyCenter/withdraw.vue') },
+             { path: 'integral', title: '积分记录', name: 'integral',component: () => import('@/views/moneyCenter/integral.vue') },
+              { path: 'applyWithdraw', title: '申请提现', name: 'applyWithdraw',component: () => import('@/views/moneyCenter/applyWithdraw.vue') }
            
         ]
     }

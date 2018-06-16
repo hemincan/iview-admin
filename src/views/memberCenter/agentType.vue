@@ -4,8 +4,6 @@
          <Button type="primary" @click="addSkip">添加</Button>
         </div>
         <Table border :columns="columns7" :data="data6"></Table>
-        <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page>
-        {{pageData}}
     </div>
 </template>
 <script>
@@ -14,16 +12,36 @@
             return {
                 columns7: [
                     {
-                        title: '帐号',
-                        key: 'accountNumber'
+                        title: '代理级别',
+                        key: 'name'
                     },
                     {
-                        title: '用户姓名',
-                        key: 'userName'
+                        title: '数量',
+                        key: 'ableCount'
                     },
                     {
-                        title: '手机',
-                        key: 'phone'
+                        title: '总价',
+                        key: 'totalMoney'
+                    },
+                      {
+                        title: '积分',
+                        key: 'integral'
+                    },
+                    {
+                        title: '备注',
+                        key: 'remark'
+                    },
+                     {
+                        title: '直接推荐奖金',
+                        key: 'firstRewardMoney'
+                    },
+                       {
+                        title: '碰撞奖金比例',
+                        key: 'collisionPer'
+                    },
+                       {
+                        title: '封顶',
+                        key: 'topReward'
                     },
                     {
                         title: '操作',
@@ -43,7 +61,7 @@
                                     on: {
                                         click: () => {
                                               this.$router.push({
-                                                    path: "/system/user/add",
+                                                    path: "/system/role/add",
                                                     query: {id: params.row.id,type:"edit"}
                                                 });
                                           }
@@ -65,13 +83,7 @@
                     }
                 ],
                 data6: [
-                ],
-                pageData:{
-                    pageIndex:0,
-                    pageSize:10,
-                    totalPages: 0,
-                    totalCount: 0
-                }
+                ]
             }
         },
         mounted(){
@@ -79,19 +91,13 @@
         },
         methods: {
             findPage(){
-                this.$http.get("/user/findAdminUserPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize).then(response=> {
+                this.$http.get("/agentType/findPage?pageIndex=0&pageSize=100000").then(response=> {
                       var data = response.data;
                       this.data6=data.result.result;
-                      this.pageData.totalCount=data.result.totalCount;
-                      this.pageData.totalPages = data.result.totalPages;
                 })
             },
             addSkip(){
-                this.$router.push({path: '/system/user/add'});
-            },
-            pageChange(pageIndex){
-                this.pageData.pageIndex=pageIndex;
-                this.findPage();
+                this.$router.push({path: '/system/role/add'});
             },
             show (index) {
                 this.$Modal.info({

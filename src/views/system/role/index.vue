@@ -22,7 +22,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 150,
+                        width: 350,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -45,7 +45,7 @@
                                 }, '编辑'),
                                 h('Button', {
                                     props: {
-                                        type: 'error',
+                                        type: 'primary',
                                         size: 'small'
                                     },
                                     on: {
@@ -53,7 +53,7 @@
                                             this.remove(params.index)
                                         }
                                     }
-                                }, '删除')
+                                }, '添加可访问菜单')
                             ]);
                         }
                     }

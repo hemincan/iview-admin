@@ -17,7 +17,7 @@
                     label-position="right"
                     :rules="inforValidate"
                 >
-                    <FormItem label="用户姓名：" prop="name">
+                   <!--  <FormItem label="用户姓名：" prop="name">
                         <div style="display:inline-block;width:300px;">
                             <Input v-model="userForm.name" ></Input>
                         </div>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         </div>
-                    </FormItem>
+                    </FormItem> -->
                     <FormItem label="帐号：">
                         <span>{{ userForm.accountNumber }}</span>
                     </FormItem>
@@ -80,12 +80,28 @@
                             <Input v-model="userForm.address" ></Input>
                         </div>
                     </FormItem>
-                 
+                    
+                     <FormItem label="银行卡号：" prop="bankCard">
+                        <div style="display:inline-block;width:300px;">
+                            <Input v-model="userForm.bankCard" ></Input>
+                        </div>
+                    </FormItem>
+                     <FormItem label="开户银行：" prop="bankName">
+                        <div style="display:inline-block;width:300px;">
+                            <Input v-model="userForm.bankName" ></Input>
+                        </div>
+                    </FormItem>
+                     <FormItem label="开户银行地址：" prop="bankAddress">
+                        <div style="display:inline-block;width:300px;">
+                            <Input v-model="userForm.bankAddress" ></Input>
+                        </div>
+                    </FormItem>
                      <FormItem label="推荐人帐号：">
                         <span>{{ userForm.recommendUserId }}</span>
                     </FormItem>
+                    <!-- {{agentType}} -->
                      <FormItem label="代理级别：">
-                        <span>{{ userForm.levelTypeId }}</span>
+                        <span>{{ agentType.name }}</span>
                     </FormItem>
                     <FormItem label="登录密码：">
                         <Button type="primary" size="small" @click="showEditPassword">修改密码</Button>
@@ -155,8 +171,9 @@ export default {
                 "realName": null,
                 "bankAddress": null,
                 "recommendUserId": null,
-                "levelTypeId": null
+                "agentTypeId": null
             },
+            agentType:'',
             uid: '', // 登录用户的userId
             securityCode: '', // 验证码
             phoneHasChanged: false, // 是否编辑了手机
@@ -206,6 +223,12 @@ export default {
     methods: {
         handleSwitchSex(ss)  {
             this.userForm.userSex = ss;
+        },
+         findAgentType(){
+            this.$http.get("/agentType/get?id="+this.userForm.agentTypeId).then(response=> {
+                  var data = response.data;
+                  this.agentType=data.result;
+            })
         },
         getIdentifyCode () {
             this.hasGetIdentifyCode = true;
@@ -297,13 +320,14 @@ export default {
             });
         },
         init () {
-
+           
              this.$http.post("/user/getUserInfo",{
                 account: Cookies.get("account")
             }).then(response=> {
                   var data = response.data;
                   if(data.code == 0) {
                         this.userForm = data.result;
+                         this.findAgentType();
                   }else{
                       
                   }
@@ -341,10 +365,21 @@ export default {
         },
         saveInfoAjax () {
             this.save_loading = true;
-            setTimeout(() => {
-                this.$Message.success('保存成功');
-                this.save_loading = false;
-            }, 1000);
+             this.$http.post("/user/updateInfo",this.userForm).then(response=> {
+                          //如果接口走成功就执行这里
+                          // console.log(JSON.stringify(response));
+                          var data = response.data;
+                          if(data.code == 0) {
+                              this.$Notice.success({
+                                    title: "修改成功！"
+                                });
+                          }else{
+                             
+                          }
+                         this.save_loading = false;
+                    }).catch(function (error) {
+                      //接口失败，也就是state不是200的时候，走这里
+                    });
         }
     },
     mounted () {
