@@ -1,11 +1,28 @@
 <template>
     <div>
-        <div style="margin:8px;text-align:left">
+      <!--   <div style="margin:8px;text-align:left">
          <Button type="primary" @click="addSkip">添加</Button>
+        </div> -->
+         <div style="margin:8px;text-align:left;width:300px;">
+                输入用户帐号：<Input v-model="searchForm.userAccount" placeholder="输入用户帐号" >
+                    
+                      <Button slot="append" type="primary" @click="serach">搜索</Button>
+                </Input>
+              
         </div>
         <Table border :columns="columns7" :data="data6"></Table>
         <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page>
-        {{pageData}}
+        <!-- {{pageData}} -->
+          <Modal
+            v-model="modal6"
+            title="请确认"
+            @on-ok="asyncOK">
+            <div v-if="currentRow!=null">
+                <p>{{currentRow.userName}}（{{currentRow.userAccount}}）</p>
+             <p>{{currentRow.totalMoney}}元</p>
+            </div>
+            <p style="color:red;">请确认用户已经付款，此操作会使此订单启用，并会发放奖金和积分给推荐人,确认请按确认。</p>
+        </Modal>
     </div>
 </template>
 <script>
@@ -76,45 +93,50 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'primary',
+                                //         size: 'small'
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //               this.$router.push({
+                                //                     path: "/system/user/add",
+                                //                     query: {id: params.row.id,type:"edit"}
+                                //                 });
+                                //           }
+                                //     }
+                                // }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
                                     on: {
                                         click: () => {
-                                              this.$router.push({
-                                                    path: "/system/user/add",
-                                                    query: {id: params.row.id,type:"edit"}
-                                                });
-                                          }
-                                    }
-                                }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
+                                            this.active(params.row)
                                         }
                                     }
-                                }, '删除')
+                                }, '处理报单')
                             ]);
                         }
                     }
                 ],
                 data6: [
                 ],
+                currentRow:null,
+                modal6:false,
                 pageData:{
                     pageIndex:0,
                     pageSize:10,
                     totalPages: 0,
                     totalCount: 0
+                },
+                searchForm:{
+                   userAccount:null,
                 }
             }
         },
@@ -123,7 +145,12 @@
         },
         methods: {
             findPage(){
-                this.$http.get("/applyGoods/findPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize+"&orderBy=id desc").then(response=> {
+                for (var s in this.searchForm) {
+                    if(this.searchForm[s]==''){
+                        this.searchForm[s]=null;
+                    }
+                }
+                this.$http.post("/applyGoods/findPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize+"&orderBy=id desc",this.searchForm).then(response=> {
                       var data = response.data;
                       this.data6=data.result.result;
                       this.pageData.totalCount=data.result.totalCount;
@@ -137,6 +164,18 @@
                 this.pageData.pageIndex=pageIndex;
                 this.findPage();
             },
+            
+             active(row){
+                this.modal6=true;
+                this.currentRow=row;
+            },
+            asyncOK(){
+                this.modal6=false;
+                 this.$http.get("/applyGoods/active?id="+this.currentRow.id).then(response=> {
+                     alert(response.data.message);
+                     row.state=1;
+                })
+            },
             show (index) {
                 this.$Modal.info({
                     title: 'User Info',
@@ -145,6 +184,9 @@
             },
             remove (index) {
                 this.data6.splice(index, 1);
+            },
+            serach(){
+                this.findPage();
             }
         }
     }

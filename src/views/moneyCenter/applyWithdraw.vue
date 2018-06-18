@@ -73,7 +73,7 @@ import Cookies from 'js-cookie';
                    
                     withdrawMoney: [
                            {required: true, message: '金额不能为空', trigger: 'blur'},
-                        {validator: validateMoney, trigger: 'blur'}
+                           {validator: validateMoney, trigger: 'blur'}
                     ],
                     bankName: [
                         { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' }

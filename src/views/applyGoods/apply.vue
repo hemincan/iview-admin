@@ -3,7 +3,7 @@
 	<Card>
             <p slot="title">
                 <Icon type="person"></Icon>
-                注册代理
+                申请报单
             </p>
             <div style="width:500px">
           

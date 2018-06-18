@@ -63,34 +63,34 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'primary',
+                                //         size: 'small'
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //               this.$router.push({
+                                //                     path: "/system/user/add",
+                                //                     query: {id: params.row.id,type:"edit"}
+                                //                 });
+                                //           }
+                                //     }
+                                // }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
                                     on: {
                                         click: () => {
-                                              this.$router.push({
-                                                    path: "/system/user/add",
-                                                    query: {id: params.row.id,type:"edit"}
-                                                });
-                                          }
-                                    }
-                                }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
+                                            // this.remove(params.index)
                                         }
                                     }
-                                }, '删除')
+                                }, '查看')
                             ]);
                         }
                     }

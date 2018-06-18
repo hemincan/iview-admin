@@ -20,6 +20,10 @@
                         key: 'remark'
                     },
                     {
+                        title: '英文名',
+                        key: 'enName'
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         width: 350,

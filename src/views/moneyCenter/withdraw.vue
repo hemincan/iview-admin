@@ -3,9 +3,16 @@
        <!--  <div style="margin:8px;text-align:left">
          <Button type="primary" @click="addSkip">添加</Button>
         </div> -->
+           <div style="margin:8px;text-align:left;width:300px;">
+                输入用户帐号：<Input v-model="searchForm.userAccount" placeholder="输入用户帐号" >
+                    
+                      <Button slot="append" type="primary" @click="serach">搜索</Button>
+                </Input>
+              
+        </div>
         <Table border :columns="columns7" :data="data6"></Table>
         <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page>
-        {{pageData}}
+        <!-- {{pageData}} -->
     </div>
 </template>
 <script>
@@ -63,34 +70,34 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'primary',
+                                //         size: 'small'
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //               this.$router.push({
+                                //                     path: "/system/user/add",
+                                //                     query: {id: params.row.id,type:"edit"}
+                                //                 });
+                                //           }
+                                //     }
+                                // }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
                                     },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
                                     on: {
                                         click: () => {
-                                              this.$router.push({
-                                                    path: "/system/user/add",
-                                                    query: {id: params.row.id,type:"edit"}
-                                                });
-                                          }
-                                    }
-                                }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
+                                            // this.remove(params.index)
                                         }
                                     }
-                                }, '删除')
+                                }, '查看')
                             ]);
                         }
                     }
@@ -102,6 +109,9 @@
                     pageSize:10,
                     totalPages: 0,
                     totalCount: 0
+                },
+                searchForm:{
+
                 }
             }
         },
@@ -110,7 +120,12 @@
         },
         methods: {
             findPage(){
-                this.$http.get("/withdraw/findPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize+"&orderBy=id desc").then(response=> {
+                   for (var s in this.searchForm) {
+                    if(this.searchForm[s]==''){
+                        this.searchForm[s]=null;
+                    }
+                }
+                this.$http.post("/withdraw/findPage?pageIndex="+this.pageData.pageIndex+"&pageSize="+this.pageData.pageSize+"&orderBy=id desc",this.searchForm).then(response=> {
                       var data = response.data;
                       this.data6=data.result.result;
                       this.pageData.totalCount=data.result.totalCount;
@@ -132,6 +147,9 @@
             },
             remove (index) {
                 this.data6.splice(index, 1);
+            },
+             serach(){
+                this.findPage();
             }
         }
     }

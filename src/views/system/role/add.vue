@@ -10,6 +10,9 @@
         <FormItem label="角色名" prop="roleName">
             <Input v-model="formValidate.roleName" placeholder="Enter your roleName"></Input>
         </FormItem>
+         <FormItem label="英文名" prop="enName">
+            <Input v-model="formValidate.enName" placeholder="Enter your e-url"></Input>
+        </FormItem>
         <FormItem label="标注" prop="remark">
             <Input v-model="formValidate.remark" placeholder="Enter your e-url"></Input>
         </FormItem>
@@ -28,11 +31,15 @@
             	type:null,
                 formValidate: {
                     roleName: '',
-                    remark: ''
+                    remark: '',
+                    enName:''
                 },
                 btnloading:false,
                 ruleValidate: {
                     roleName: [
+                        { required: true, message: '角色名不能为空', trigger: 'blur' }
+                    ],
+                      enName: [
                         { required: true, message: '角色名不能为空', trigger: 'blur' }
                     ]
                 }

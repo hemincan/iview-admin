@@ -257,7 +257,8 @@ var userRouter = [
             { path: 'addAgent', title: '注册代理', name: 'addAgent',component: () => import('@/views/memberCenter/addAgent.vue') },
             { path: 'treeStructure', title: '安置结构', name: 'treeStructure',component: () => import('@/views/memberCenter/treeStructure.vue') },
             { path: 'recommendedStructure', title: '推荐结构', name: 'recommendedStructure',component: () => import('@/views/memberCenter/recommendedStructure.vue') },
-            { path: 'agentType', title: '代理类型', name: 'agentType',component: () => import('@/views/memberCenter/agentType.vue') }
+            { path: 'agentType', title: '代理类型', name: 'agentType',component: () => import('@/views/memberCenter/agentType.vue') },
+             { path: 'agentTypeEdit', title: '代理类型编辑',show:false, name: 'agentTypeEdit',component: () => import('@/views/memberCenter/agentTypeEdit.vue') }
            
            
         ]

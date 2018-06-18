@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div style="margin:8px;text-align:left">
+      <!--   <div style="margin:8px;text-align:left">
          <Button type="primary" @click="addSkip">添加</Button>
-        </div>
+        </div> -->
         <Table border :columns="columns7" :data="data6"></Table>
     </div>
 </template>
@@ -27,10 +27,7 @@
                         title: '积分',
                         key: 'integral'
                     },
-                    {
-                        title: '备注',
-                        key: 'remark'
-                    },
+                    
                      {
                         title: '直接推荐奖金',
                         key: 'firstRewardMoney'
@@ -42,6 +39,10 @@
                        {
                         title: '封顶',
                         key: 'topReward'
+                    },
+                    {
+                        title: '备注',
+                        key: 'remark'
                     },
                     {
                         title: '操作',
@@ -61,23 +62,23 @@
                                     on: {
                                         click: () => {
                                               this.$router.push({
-                                                    path: "/system/role/add",
-                                                    query: {id: params.row.id,type:"edit"}
+                                                    path: "/memberCenter/agentTypeEdit",
+                                                    query: {id: params.row.id}
                                                 });
                                           }
                                     }
                                 }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
-                                        }
-                                    }
-                                }, '删除')
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'error',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.remove(params.index)
+                                //         }
+                                //     }
+                                // }, '删除')
                             ]);
                         }
                     }
