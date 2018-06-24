@@ -92,6 +92,10 @@
                         width: 150,
                         align: 'center',
                         render: (h, params) => {
+                            var disabled = false;
+                             if(params.row.state==1){
+                                disabled=true;
+                             }
                             return h('div', [
                                 // h('Button', {
                                 //     props: {
@@ -113,7 +117,8 @@
                                 h('Button', {
                                     props: {
                                         type: 'primary',
-                                        size: 'small'
+                                        size: 'small',
+                                        disabled: disabled
                                     },
                                     on: {
                                         click: () => {

@@ -13,6 +13,7 @@
                     :open-names="openedSubmenuArr"
                     :menu-list="menuList">
                     <div slot="top" class="logo-con">
+                    <!-- 头顶logo的标志 -->
                         <img v-show="!shrink"  src="../images/logo.jpg" key="max-logo" />
                         <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
                     </div>
@@ -68,6 +69,8 @@
     </div>
 </template>
 <script>
+
+
     import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
     import tagsPageOpened from './main-components/tags-page-opened.vue';
     import breadcrumbNav from './main-components/breadcrumb-nav.vue';
@@ -204,15 +207,26 @@
             }
         },
         mounted () {
+
             this.$http.post('/menu/findUserMenus').then(response=> {
                  var data = response.data;
+                 
                   if(data.code == 0) {
                     this.userMenus=data.result;
                     this.init(); // 调用store app.js里面的方法与本地的路由过滤
-                }
+                 }else if(data.code==1000){
+                    //说明登录信息已经过期，跳到登录界面
+                    this.$store.commit('logout', this);
+                    this.$store.commit('clearOpenedSubmenu');
+                    this.$router.push({
+                        name: 'login'
+                    });
+                 }
             })
             
             window.addEventListener('resize', this.scrollBarResize);
+
+
         },
         created () {
             // 显示打开的页面的列表

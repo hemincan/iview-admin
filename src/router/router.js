@@ -233,7 +233,7 @@ var iviewAdminRouter = [
 var userRouter = [
      {
         path: '/system/',
-        icon: 'android-sad',
+        icon: 'ios-gear',
         title: '系统设置',
         name: 'menupage',
         component: Main,
@@ -249,7 +249,7 @@ var userRouter = [
     },
      {
         path: '/memberCenter/',
-        icon: 'android-sad',
+        icon: 'ios-person',
         title: '会员中心',
         name: 'memberCenter',
         component: Main,
@@ -265,7 +265,7 @@ var userRouter = [
     },
     {
         path: '/applyGoods/',
-        icon: 'android-sad',
+        icon: 'social-twitch',
         title: '报单中心',
         name: 'applyGoods',
         component: Main,
@@ -277,7 +277,7 @@ var userRouter = [
     },
     {
         path: '/moneyCenter/',
-        icon: 'android-sad',
+        icon: 'pricetag',
         title: '金钱中心',
         name: 'moneyCenter',
         component: Main,

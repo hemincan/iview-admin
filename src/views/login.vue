@@ -26,6 +26,15 @@
                                 </span>
                             </Input>
                         </FormItem>
+                         <FormItem prop="identifyCode">
+                                <Input  v-model="identifyCodeInput" placeholder="验证码">
+                                    <!-- <div  slot="prepend">验证码</div> -->
+                               
+                                <div class="code" @click="refreshCode" slot="append"  >
+                                        <s-identify :identifyCode="identifyCode"></s-identify>
+                                </div>
+                             </Input>
+                        </FormItem>
                         <div style="color:red">{{errorMessage}}</div>
                         <FormItem >
                             <Button @click="handleSubmit" :loading="logining" type="primary" long>登录</Button>
@@ -41,9 +50,17 @@
 
 <script>
 import Cookies from 'js-cookie';
+import SIdentify from './identifyCode/identify.vue'
 export default {
+    components:{
+        SIdentify
+    },
     data () {
+     
         return {
+             identifyCodes: "1234567890",
+            identifyCode: "1234",
+            identifyCodeInput:'',
             form: {
                 userName: '123456',
                 password: '123'
@@ -60,8 +77,17 @@ export default {
             errorMessage: ''
         };
     },
+   mounted() {
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+    },
     methods: {
         handleSubmit () {
+              this.errorMessage="";
+                if(this.identifyCodeInput!=this.identifyCode){
+                     this.errorMessage="请输入正确的验证码";
+                    return;
+                }
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
                     this.logining=true;
@@ -102,6 +128,21 @@ export default {
             this.$router.push({
                 name: 'home_index'
             });
+        },
+         randomNum(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        },
+        refreshCode() {
+          this.identifyCode = "";
+          this.makeCode(this.identifyCodes, 4);
+        },
+        makeCode(o, l) {
+          for (let i = 0; i < l; i++) {
+            this.identifyCode += this.identifyCodes[
+              this.randomNum(0, this.identifyCodes.length)
+            ];
+          }
+          // console.log(this.identifyCode);
         }
     }
 };

@@ -9,8 +9,8 @@
           
            
 		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-                {{formValidate.agentTypeId}}
-               <FormItem label="代理类型：" prop="agentTypeId">
+                <!-- {{formValidate.agentTypeId}} -->
+               <FormItem label="货品类型：" prop="agentTypeId">
                     <Select v-model="formValidate.agentTypeId" placeholder="Select your city">
                     <div  v-for="item in agentType">
                          <Option :value="item.id" :key="item.id">{{item.name}}({{item.remark}} )</Option>
@@ -20,15 +20,15 @@
                     </Select>
                </FormItem>
 		        <FormItem label="用户姓名：" prop="receiverName">
-		            <Input v-model="formValidate.receiverName" placeholder="Enter your name"></Input>
+		            <Input v-model="formValidate.receiverName" placeholder="请输入用户姓名"></Input>
 		        </FormItem>
                
                 <FormItem label="手机号码：" prop="receiverPhone">
-                    <Input v-model="formValidate.receiverPhone" placeholder="Enter your e-mail"></Input>
+                    <Input v-model="formValidate.receiverPhone" placeholder="输入用户手机号码 "></Input>
                 </FormItem>
                 
                  <FormItem label="收货地址：" prop="receiverAddress">
-                    <Input v-model="formValidate.receiverAddress" placeholder="Enter your e-mail"></Input>
+                    <Input v-model="formValidate.receiverAddress" placeholder="请输入收货地址"></Input>
                 </FormItem>
 		        <FormItem>
 		            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -68,13 +68,13 @@ import Cookies from 'js-cookie';
                 ruleValidate: {
                    
                     receiverName: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     receiverPhone: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                      receiverAddress: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ]
                 }
             }
