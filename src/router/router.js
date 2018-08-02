@@ -258,8 +258,9 @@ var userRouter = [
             { path: 'treeStructure', title: '安置结构', name: 'treeStructure',component: () => import('@/views/memberCenter/treeStructure.vue') },
             { path: 'recommendedStructure', title: '推荐结构', name: 'recommendedStructure',component: () => import('@/views/memberCenter/recommendedStructure.vue') },
             { path: 'agentType', title: '代理类型', name: 'agentType',component: () => import('@/views/memberCenter/agentType.vue') },
-             { path: 'agentTypeEdit', title: '代理类型编辑',show:false, name: 'agentTypeEdit',component: () => import('@/views/memberCenter/agentTypeEdit.vue') }
-           
+             { path: 'agentTypeEdit', title: '代理类型编辑',show:false, name: 'agentTypeEdit',component: () => import('@/views/memberCenter/agentTypeEdit.vue') },
+              { path: 'userList', title: '代理管理',show:true, name: 'userList',component: () => import('@/views/memberCenter/userList.vue') },
+               { path: 'teamList', title: '团队列表',show:true, name: 'teamList',component: () => import('@/views/memberCenter/teamList.vue') }
            
         ]
     },
@@ -285,7 +286,9 @@ var userRouter = [
             { path: 'bonus', title: '奖金记录', name: 'bonus',component: () => import('@/views/moneyCenter/bonus.vue') },
              { path: 'withdraw', title: '提现记录', name: 'withdraw',component: () => import('@/views/moneyCenter/withdraw.vue') },
              { path: 'integral', title: '积分记录', name: 'integral',component: () => import('@/views/moneyCenter/integral.vue') },
-              { path: 'applyWithdraw', title: '申请提现', name: 'applyWithdraw',component: () => import('@/views/moneyCenter/applyWithdraw.vue') }
+              { path: 'applyWithdraw', title: '申请提现', name: 'applyWithdraw',component: () => import('@/views/moneyCenter/applyWithdraw.vue') },
+               { path: 'transferList', title: '转帐记录', name: 'transferList',component: () => import('@/views/moneyCenter/transferList.vue') }
+             
            
         ]
     }

@@ -7,6 +7,15 @@
             </p>
             <div style="width:500px">
 		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+               <FormItem label="帐号：">
+                    <RadioGroup v-model="accountType">
+                        <Radio label="系统生成"></Radio>
+                        <Radio label="自定义"></Radio>
+                    </RadioGroup>
+                </FormItem>
+                <FormItem v-if="accountType=='自定义'" label="请输入自定义帐号：" prop="userAccount">
+                    <Input v-model="formValidate.userAccount" placeholder="自定义帐号"></Input>
+                </FormItem>
 		        <FormItem label="用户姓名：" prop="userName">
 		            <Input v-model="formValidate.userName" placeholder="用户姓名"></Input>
 		        </FormItem>
@@ -52,7 +61,7 @@
                     <Select v-model="formValidate.position" placeholder="放置区域">
                         <Option value="left">左区</Option>
                         <Option value="right">右区</Option>
-                    
+                        <Option value="none">无（选择此项，代理自己形成一个团队，报单你也不会获得积分）</Option>
                     </Select>
                 </FormItem>
                  <FormItem label="放置区域：" v-if="!showPosition" >
@@ -64,7 +73,7 @@
                     <Input v-model="formValidate.address" placeholder="输入完整的收货地址"></Input>
                 </FormItem>
 		        <FormItem>
-		            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+		            <Button type="primary" :loading="submitBtnLoading" @click="handleSubmit('formValidate')">提交</Button>
 		            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
 		        </FormItem>
 		    </Form>
@@ -72,6 +81,7 @@
         
          <Modal
             v-model="modal6"
+            :mask-closable='false'
             title="注册成功"
             :loading="loading"
             @on-ok="asyncOK">
@@ -84,10 +94,20 @@
 import Cookies from 'js-cookie';
     export default {
         data () {
+            const valideUserAccount = (rule, value, callback) => {
+                // var re = /^1[0-9]{10}$/;
+                if (value.length<7) {
+                    callback(new Error('帐号长度需要大于7位'));
+                } else {
+                    callback();
+                }
+            };
             return {
+                accountType:'系统生成',
                 formValidate: {
+                    userAccount:'',
                     userName:'', 
-                    userPassword:'',
+                    userPassword:'123456',
                     identityCard:'', 
                     phone:'',
                     userSex:'1',
@@ -101,9 +121,13 @@ import Cookies from 'js-cookie';
                 showPosition:false,
                 modal6: false,
                 loading: true,
+                submitBtnLoading:false,
                 newUserAccountNumber:'',
                 agentType:[],
                 ruleValidate: {
+                    userAccount: [
+                        {type: "string", required: false, trigger: 'blur',validator: valideUserAccount}
+                    ],
                     userName: [
                         { required: true, message: '不能为空', trigger: 'blur' }
                     ],
@@ -120,7 +144,7 @@ import Cookies from 'js-cookie';
                         { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     qqNumber: [
-                        { required: true, message: '不能为空', trigger: 'blur' }
+                        { required: false, message: '不能为空', trigger: 'blur' }
                     ],
                      address: [
                         { required: true, message: '不能为空', trigger: 'blur' }
@@ -142,10 +166,13 @@ import Cookies from 'js-cookie';
         },
         methods: {
             handleSubmit (name) {
+                if(this.accountType=='系统生成'){
+                    this.formValidate.userAccount=null;
+                }
                 this.$refs[name].validate((valid) => {
                     if (valid) {
 
-
+                        this.submitBtnLoading=true;
                         this.$http.post("/user/register",this.formValidate).then(response=> {
                       
                                   var data = response.data;
@@ -155,19 +182,24 @@ import Cookies from 'js-cookie';
                                         });
                                       this.newUserAccountNumber=data.result.accountNumber;
                                       this.modal6=true;
+                                      this.formValidate.userName='';
+                                      this.formValidate.identityCard='';
+                                      this.formValidate.phone='';
+                                      this.formValidate.address='';
+                                      this.qqNumber='';
                                   }else{
-                                    this.$Message.error('Fail!');
+                                    this.$Message.error(data.message);
                                   }
                                   this.btnloading = false;
-
+                                  this.submitBtnLoading=false;
                             }).catch(function (error) {
                               //接口失败，也就是state不是200的时候，走这里
-                              this.$Message.error('Fail!');
+                                // this.$Message.error('Fail!');
                             });
 
                         
                     } else {
-                        this.$Message.error('Fail!');
+                        this.$Message.error('提交失败，请检查数据是否输入正确!');
                     }
                 })
             },

@@ -30,7 +30,7 @@
                                 <Input  v-model="identifyCodeInput" placeholder="验证码">
                                     <!-- <div  slot="prepend">验证码</div> -->
                                
-                                <div class="code" @click="refreshCode" slot="append"  >
+                                <div @click="refreshCode" slot="append"  >
                                         <s-identify :identifyCode="identifyCode"></s-identify>
                                 </div>
                              </Input>
@@ -62,8 +62,8 @@ export default {
             identifyCode: "1234",
             identifyCodeInput:'',
             form: {
-                userName: '123456',
-                password: '123'
+                userName: '',
+                password: ''
             },
             rules: {
                 userName: [
@@ -88,6 +88,7 @@ export default {
                      this.errorMessage="请输入正确的验证码";
                     return;
                 }
+                this.refreshCode();
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
                     this.logining=true;
@@ -97,7 +98,7 @@ export default {
                     })
                     .then(response=> {
                       //如果接口走成功就执行这里
-                      console.log(JSON.stringify(response));
+                      // console.log(JSON.stringify(response));
                       var data = response.data;
                       if(data.code == 0) {
                         this.loginSuccess();

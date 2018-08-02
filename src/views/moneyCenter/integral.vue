@@ -34,10 +34,10 @@
                         title: '获得积分',
                         key: 'amount'
                     },
-                    {
-                        title: '备注',
-                        key: 'remark'
-                    },
+                    // {
+                    //     title: '备注',
+                    //     key: 'remark'
+                    // },
                      {
                         title: '状态',
                         key: "state",

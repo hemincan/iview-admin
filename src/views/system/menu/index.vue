@@ -22,13 +22,14 @@ data () {
 	    columns1: [
 	        {
 	            type: 'tree',
-	            width: 200,
+	            width: 190,
 	            title: '菜单名称',
 	            key: 'menuName'
 	        },
 	        {
 	            title: '路径',
-	            key: 'url'
+	            key: 'url',
+                width: 150
 	        },
 	        {
 	            title: '创建时间',

@@ -7,7 +7,7 @@
             <div style="overflow:hidden;padding:20px;width:900px;">
                <OrgChart :data="testData" v-on:onDrop="onDrop" @onClick="nodeClick"></OrgChart>
             </div>
-
+             <Button type="primary" @click="back">返回最上层</Button>
   </Card>
 </template>
 
@@ -21,6 +21,7 @@
     },
     data() {
       return {
+        preAccount:'',
         testData: [
           {
             id: 1,
@@ -64,18 +65,26 @@
       }
     },
     mounted(){
-      this.init(Cookies.get("account"));
+      this.preAccount = this.$route.query.account;
+      if( this.preAccount==null){
+        this.preAccount=Cookies.get("account");
+      }
+      this.init(this.preAccount);
     },
     methods: {
        init(account) {
+            this.$Spin.show();
              this.$http.get("/agentTree/treeStructure?account="+ account).then(response=> {
                     var data = response.data;
                     this.testData = new Array();
                     this.testData.push(data.result);
                     
-                
+                    this.$Spin.hide();
                     
               })
+      },
+      back(){
+          this.init(this.preAccount);
       },
      nodeClick(node){
         // alert(JSON.stringify(node))

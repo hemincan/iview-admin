@@ -6,7 +6,7 @@
            {{ node.accountNumber }}
           </div>
            <div style="height:25px">
-           {{ node.userName }}
+           {{ node.userName }}({{node.state}})
           </div>
           <div style="height:25px">
             {{ node.agentTypeName }}
