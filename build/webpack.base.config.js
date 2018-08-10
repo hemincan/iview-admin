@@ -9,7 +9,7 @@ function resolve (dir) {
 }
 module.exports = {
     entry: {
-        main: '@/main',
+        main: ["babel-polyfill","./src/main"],
         'vender-base': '@/vendors/vendors.base.js',
         'vender-exten': '@/vendors/vendors.exten.js'
     },

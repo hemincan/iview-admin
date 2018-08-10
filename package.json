@@ -19,6 +19,7 @@
   "dependencies": {
     "area-data": "^1.0.0",
     "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
     "clipboard": "^1.7.1",
     "countup": "^1.8.2",
     "cropperjs": "^1.2.2",
@@ -79,7 +80,7 @@
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1",
+    "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.1",
     "webpack-uglify-parallel": "^0.1.4"
   }
